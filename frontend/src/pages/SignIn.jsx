@@ -19,7 +19,7 @@ const SignIn = () => {
         userDetails
       );
       localStorage.setItem('user', JSON.stringify(response.data));
-      window.location.href = '/myaccount';
+      window.location.href = '/profile';
     } catch (error) {
       if (error.response.status === 403) {
         toast.error('Invalid Credentials');

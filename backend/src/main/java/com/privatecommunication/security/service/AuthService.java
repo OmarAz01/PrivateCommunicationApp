@@ -44,20 +44,17 @@ public class AuthService {
                     .error("Email already exists").build());
         }
 
-        // Creating a new user
         UserEntity user = new UserEntity();
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        // Saving the user
         try {
             UserDTO savedUser = userService.save(user).getBody();
             if (savedUser == null) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuthenticationResponse
                         .builder().error("User registration failed").build());
             }
-            // Create refresh and access tokens
             Long userId = savedUser.getUserId();
             String jwt = jwtService.generateToken(userId);
             String refreshToken = jwtService.generateRefreshToken(userId);
@@ -81,9 +78,7 @@ public class AuthService {
                     request.getEmail(), request.getPassword(), Collections.emptyList()));
         }
         Long userId = user.getUserId();
-        // Delete old refresh token
         refreshTokenService.deleteRefreshToken(userId);
-        // Create new refresh and access tokens
         String jwt = jwtService.generateToken(userId);
         String refreshToken = jwtService.generateRefreshToken(userId);
         refreshTokenService.createRefreshToken(user.getUserId(), refreshToken, jwt);
@@ -134,14 +129,12 @@ public class AuthService {
                 return;
             }
 
-            // If the refresh token is valid and not expired, create a new access token and update database with it
             String newJwt = jwtService.generateToken(userId);
             refreshTokenService.updateLastAccessToken(userId, newJwt);
             AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
                     .userId(userId).jwt(newJwt).build();
             new ObjectMapper().writeValue(response.getOutputStream(), authenticationResponse);
         } else {
-            // Return the current token if it is valid and not expired
             AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
                     .userId(userId).jwt(jwt).build();
             new ObjectMapper().writeValue(response.getOutputStream(), authenticationResponse);
