@@ -16,5 +16,15 @@ public class ChatRequestEntity {
     @ManyToOne
     @JoinColumn(name = "recipient_id")
     private UserEntity recipient;
-    private Boolean isAccepted;
+    private String status;
+
+    public ChatRequestEntity(UserEntity userEntity, UserEntity userEntity1, String status) {
+        this.sender = userEntity;
+        this.recipient = userEntity1;
+        this.status = status;
+    }
+
+    public ChatRequestEntity() {
+    }
 }
+

@@ -27,6 +27,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/{id}").permitAll()
                         .requestMatchers("/api/auth/register").permitAll()
                         .requestMatchers("/api/auth/authenticate").permitAll()
+                        .requestMatchers("/pm-ws/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

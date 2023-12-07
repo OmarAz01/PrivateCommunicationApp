@@ -19,7 +19,8 @@ public class MessageEntity {
     @JoinColumn(name = "recipient_id")
     private UserEntity recipient;
     private String content;
-    private String timestamp;
-    private boolean isRead;
+    @ManyToOne
+    @JoinColumn(name = "chat_room_id")
+    private ChatRoom chatRoom;
 
 }

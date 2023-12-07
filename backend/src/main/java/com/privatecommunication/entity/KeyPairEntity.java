@@ -1,11 +1,12 @@
 package com.privatecommunication.entity;
 
+import com.privatecommunication.repo.ChatRoomRepo;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "key_pairs", uniqueConstraints = @UniqueConstraint(columnNames = {"user1_id", "user2_id"}))
+@Table(name = "key_pairs")
 public class KeyPairEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,9 +14,16 @@ public class KeyPairEntity {
     private String publicKey;
     private String privateKey;
     @ManyToOne
-    @JoinColumn(name = "user1_id")
-    private UserEntity user1;
-    @ManyToOne
-    @JoinColumn(name = "user2_id")
-    private UserEntity user2;
+    @JoinColumn(name = "chat_room_id")
+    private ChatRoom chatRoom;
+
+    public KeyPairEntity(String generatedKey, String generatedKey1, ChatRoom chatRoom) {
+        this.publicKey = generatedKey;
+        this.privateKey = generatedKey1;
+        this.chatRoom = chatRoom;
+    }
+
+    public KeyPairEntity() {
+
+    }
 }

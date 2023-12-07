@@ -36,10 +36,6 @@ public class UserEntity implements UserDetails {
     private List<ChatRequestEntity> sentRequests;
     @OneToMany(mappedBy = "recipient")
     private List<ChatRequestEntity> receivedRequests;
-    @OneToMany(mappedBy = "user1")
-    private List<KeyPairEntity> keyPairs1;
-    @OneToMany(mappedBy = "user2")
-    private List<KeyPairEntity> keyPairs2;
 
     public UserDTO userDTO() {
         UserDTO userDTO = new UserDTO();

@@ -1,10 +1,11 @@
 package com.privatecommunication.service;
 
-import com.privatecommunication.dto.EmailChangeDTO;
-import com.privatecommunication.dto.PasswordChangeDTO;
-import com.privatecommunication.dto.UserDTO;
+import com.privatecommunication.dto.*;
+import com.privatecommunication.entity.ChatRequestEntity;
 import com.privatecommunication.entity.UserEntity;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface UserService {
     ResponseEntity<UserDTO> findUser(Long id);
@@ -23,4 +24,23 @@ public interface UserService {
 
     ResponseEntity<String> changeEmail(Long id, EmailChangeDTO emailChangeDTO);
 
+    ResponseEntity<List<RequestDTO>> getRequests(Long id);
+
+    ResponseEntity<List<MessageDTO>> getLastTenMessages(Long chatRoomId);
+
+    ResponseEntity<MessageDTO> getLastMessage(Long chatRoomId);
+
+    ResponseEntity<Long> getChatRoomId(Long id, Long id2);
+
+    ResponseEntity setChatRoomId(Long roomId, Long user1Id, Long user2Id);
+
+    ResponseEntity requestResponse(Long requestId, String status);
+
+    ResponseEntity<List<PrevChatsDTO>> getPrevChats(Long id);
+
+    ResponseEntity<List<UserDTO>> findByUsernameContaining(String username);
+
+    ResponseEntity<?> sendRequest(Long senderId, Long receiverId);
+
+    ResponseEntity<?> deleteChat(Long chatRoomId);
 }

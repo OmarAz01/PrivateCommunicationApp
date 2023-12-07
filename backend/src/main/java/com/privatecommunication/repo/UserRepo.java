@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,4 +24,6 @@ public interface UserRepo extends JpaRepository<UserEntity, Long> {
     @Query(value = "delete from users where user_id = :userId", nativeQuery = true)
     void deleteById(@Param("userId") Long userId);
 
+    @Query(value = "SELECT * FROM users WHERE username LIKE %:username%", nativeQuery = true)
+    List<UserEntity> findByUsernameContaining(@Param("username") String username);
 }

@@ -44,7 +44,7 @@ const SignUp = () => {
           );
           toast.success('Registered successfully redirecting...');
           setTimeout(() => {
-            window.location.href = '/myaccount';
+            window.location.href = '/profile';
           }, 5000);
         })
         .catch(error => {
